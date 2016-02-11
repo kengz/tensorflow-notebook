@@ -1,6 +1,7 @@
 import os
 
 from model import Word2Vec
+import tensorflow as tf
 
 config = {}
 config['corpus'] = "corpus.txt" # input data
