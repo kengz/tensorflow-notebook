@@ -21,6 +21,7 @@
 # classifier = nltk.data.load('classifier/movie_reviews_NaiveBayes.pickle')
 # classifier.classify(feats)
 
+
 from textblob import TextBlob
 
 text = '''
@@ -37,10 +38,60 @@ artificial intelligence run rampant.
 blob = TextBlob(text)
 print(blob.tags)
 print(blob.noun_phrases)
+print(blob.words)
+print(blob.sentences)
 
-for sentence in blob.sentences:
-  print(sentence)
-  print(sentence.sentiment.polarity)
+# for sentence in blob.sentences:
+#   print(sentence)
+#   print(sentence.sentiment.polarity)
 
 
-print(blob.translate(to="zh-CN"))
+# print(blob.translate(to="zh-CN"))
+
+
+
+# Lemmatization
+from textblob import Word
+
+w = Word("sees")
+print(w.lemmatize("v"))
+w = Word("saw")
+print(w.lemmatize("v"))
+w = Word("seen")
+print(w.lemmatize("v"))
+w = Word("seeing")
+print(w.lemmatize("v"))
+
+
+# WordNet
+from textblob import Word
+from textblob.wordnet import VERB
+word = Word("see")
+# set of "synonyms"
+print(word.synsets)
+print(word.get_synsets(pos=VERB))
+
+print(word.definitions)
+
+# Autocorrect, based on Norvig. 70% right
+b = TextBlob("I havv goood speling!")
+print(b.correct())
+
+
+# Google translate
+chinese_blob = TextBlob(u"美丽优于丑陋")
+print(chinese_blob.translate(to="en"))
+print(chinese_blob.detect_language())
+
+b = TextBlob("And now for something completely different.")
+print(b.parse())
+
+
+# Python string
+zen = TextBlob("Beautiful is better than ugly")
+print(zen[0:19])
+print(zen.upper())
+print(zen.find("is"))
+
+# n-grams
+print(zen.ngrams(n=3))
