@@ -140,23 +140,23 @@
 
 # Advanced usage: slight cuztomizations
 
-# from textblob import TextBlob
+from textblob import TextBlob
 # from textblob.sentiments import NaiveBayesAnalyzer
 
 # blob = TextBlob("I love this library", analyzer=NaiveBayesAnalyzer())
 # print(blob.sentiment)
 
 
-from textblob import TextBlob
+# from textblob import TextBlob
 
-# tokenizer
-from nltk.tokenize import TabTokenizer
-tokenizer = TabTokenizer()
-blob = TextBlob("This is\ta rather tabby\tblob.", tokenizer=tokenizer)
-print(blob.tokens)
+# # tokenizer
+# from nltk.tokenize import TabTokenizer
+# tokenizer = TabTokenizer()
+# blob = TextBlob("This is\ta rather tabby\tblob.", tokenizer=tokenizer)
+# print(blob.tokens)
 
-blob2 = TextBlob("That is\talso a tabby\tblob.")
-print(blob2.tokenize(tokenizer))
+# blob2 = TextBlob("That is\talso a tabby\tblob.")
+# print(blob2.tokenize(tokenizer))
 
 
 # noun_phrases extractor
@@ -187,3 +187,4 @@ tb = Blobber(pos_tagger=NLTKTagger(), np_extractor=extractor)
 blob1 = tb("Python is a high-level programming language.")
 blob2 = tb("Nodejs is a high-level programming language.")
 print(blob1.noun_phrases)
+print(blob1.pos_tags)

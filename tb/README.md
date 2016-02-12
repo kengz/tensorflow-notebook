@@ -25,3 +25,9 @@ python3 -m space.en.download
 
 deactivate
 ```
+
+
+## Ref
+
+- [Pattern ref](http://www.clips.ua.ac.be/pages/pattern-en#parser)
+- [Parser and POS tags ref](http://www.clips.ua.ac.be/pages/mbsp-tags)
