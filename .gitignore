@@ -1,6 +1,7 @@
 # System Files
 .DS_Store
 tensorflow/
+node_modules/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -19,7 +19,7 @@ find . -name "*.zip" | while read filename; do unzip -o -d "`dirname "$filename"
 pip3 install -U textblob
 python3 -m textblob.download_corpora
 
-# spacy
+# spacy, not worthy yet except for perf and entity
 pip3 install -U spacy
 python3 -m space.en.download
 
