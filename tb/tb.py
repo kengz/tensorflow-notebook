@@ -98,39 +98,92 @@
 
 
 
-from textblob.classifiers import NaiveBayesClassifier
+# # classifier
+# from textblob.classifiers import NaiveBayesClassifier
 
-# train naive bayes classifier
-# with open('train.csv', 'r') as fp:
-# 	print(fp)
-# 	cl = NaiveBayesClassifier(fp, format='csv')
+# # train naive bayes classifier
+# # with open('train.csv', 'r') as fp:
+# # 	print(fp)
+# # 	cl = NaiveBayesClassifier(fp, format='csv')
 
-import csv
-fp = open('train.csv', 'r')
-print(fp)
-cl = NaiveBayesClassifier(fp, format='csv')
-print(cl.classify("This is an amazing library!"))
+# import csv
+# fp = open('train.csv', 'r')
+# print(fp)
+# cl = NaiveBayesClassifier(fp, format='csv')
+# print(cl.classify("This is an amazing library!"))
 
-prob_dist = cl.prob_classify("This is an amazing library!")
-print(prob_dist.max())
-print(round(prob_dist.prob("pos"), 2))
+# prob_dist = cl.prob_classify("This is an amazing library!")
+# print(prob_dist.max())
+# print(round(prob_dist.prob("pos"), 2))
 
-# use trained cl in textblob
+# # use trained cl in textblob
+# from textblob import TextBlob
+# b = TextBlob("The beer is good. But the hangover is horrible.", classifier=cl)
+# print(b.classify())
+
+# # evaluate
+# test = open('test.csv', 'r')
+# print(cl.accuracy(test))
+# cl.show_informative_features(5)
+
+# # Update classifier
+# new_data = [('She is my best friend.', 'pos'),
+# ("I'm happy to have a new friend.", 'pos'),
+# ("Stay thirsty, my friend.", 'pos'),
+# ("He ain't from around here.", 'neg')]
+
+# cl.update(new_data)
+# test = open('test.csv', 'r')
+# print(cl.accuracy(test))
+
+
+
+# Advanced usage: slight cuztomizations
+
+# from textblob import TextBlob
+# from textblob.sentiments import NaiveBayesAnalyzer
+
+# blob = TextBlob("I love this library", analyzer=NaiveBayesAnalyzer())
+# print(blob.sentiment)
+
+
 from textblob import TextBlob
-b = TextBlob("The beer is good. But the hangover is horrible.", classifier=cl)
-print(b.classify())
 
-# evaluate
-test = open('test.csv', 'r')
-print(cl.accuracy(test))
-cl.show_informative_features(5)
+# tokenizer
+from nltk.tokenize import TabTokenizer
+tokenizer = TabTokenizer()
+blob = TextBlob("This is\ta rather tabby\tblob.", tokenizer=tokenizer)
+print(blob.tokens)
 
-# Update classifier
-new_data = [('She is my best friend.', 'pos'),
-("I'm happy to have a new friend.", 'pos'),
-("Stay thirsty, my friend.", 'pos'),
-("He ain't from around here.", 'neg')]
+blob2 = TextBlob("That is\talso a tabby\tblob.")
+print(blob2.tokenize(tokenizer))
 
-cl.update(new_data)
-test = open('test.csv', 'r')
-print(cl.accuracy(test))
+
+# noun_phrases extractor
+from textblob.np_extractors import ConllExtractor
+extractor = ConllExtractor()
+blob = TextBlob("Python is a high-level programming language.", np_extractor=extractor)
+print(blob.noun_phrases)
+
+
+# POS tagger
+from textblob.taggers import NLTKTagger
+nltk_tagger = NLTKTagger()
+blob = TextBlob("Tag! You're It!", pos_tagger=nltk_tagger)
+print(blob.pos_tags)
+
+
+# Parsers
+from textblob.parsers import PatternParser
+blob = TextBlob("Parsing is fun.", parser=PatternParser())
+print(blob.parse())
+
+
+# DRY usage
+from textblob import Blobber
+from textblob.taggers import NLTKTagger
+# custom TextBlob constructor
+tb = Blobber(pos_tagger=NLTKTagger(), np_extractor=extractor)
+blob1 = tb("Python is a high-level programming language.")
+blob2 = tb("Nodejs is a high-level programming language.")
+print(blob1.noun_phrases)
