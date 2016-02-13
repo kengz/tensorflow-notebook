@@ -5,14 +5,14 @@ var server = app.listen(8080)
 var io = require('socket.io')(server)
 
 
-process.on('SIGINT', () => {
-  console.log("exitting")
-  _.each(io.sockets.sockets, function(s) {
-    s.disconnect(true)
-  })
-  io.close()
-  process.exit()
-})
+// process.on('SIGINT', () => {
+//   console.log("exitting")
+//   _.each(io.sockets.sockets, function(s) {
+//     s.disconnect(true)
+//   })
+//   // io.close()
+//   process.exit()
+// })
 
 
 // serialize for direct communication by using join room
