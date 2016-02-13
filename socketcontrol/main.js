@@ -19,6 +19,7 @@ var io = require('socket.io')(server)
 io.sockets.on('connection', function(socket) {
   socket.on('join', function(id) {
     socket.join(id)
+    console.log(id, "joined")
   })
 })
 

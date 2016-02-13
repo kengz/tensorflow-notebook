@@ -26,6 +26,27 @@ python3 -m space.en.download
 deactivate
 ```
 
+Stanford NER, POSTagger, Parser. These files are freaking huge: ~600Mb in total.
+
+```shell
+curl -o ~/nltk_data/stanford-ner.zip -Lk http://nlp.stanford.edu/software/stanford-ner-2015-12-09.zip
+curl -o ~/nltk_data/stanford-postagger-full.zip -Lk http://nlp.stanford.edu/software/stanford-postagger-full-2015-12-09.zip
+curl -o ~/nltk_data/stanford-parser-full.zip -Lk http://nlp.stanford.edu/software/stanford-parser-full-2015-12-09.zip
+
+unzip ~/nltk_data/stanford-ner.zip -d ~/nltk_data/stanford-ner && cd ~/nltk_data/stanford-ner/* && mv ./* ../ && rm ~/nltk_data/stanford-ner.zip && cd
+
+unzip ~/nltk_data/stanford-postagger-full.zip -d ~/nltk_data/stanford-postagger-full && cd ~/nltk_data/stanford-postagger-full/* && mv ./* ../ && rm ~/nltk_data/stanford-postagger-full.zip && cd
+
+unzip ~/nltk_data/stanford-parser-full.zip -d ~/nltk_data/stanford-parser-full && cd ~/nltk_data/stanford-parser-full/* && mv ./* ../ && rm ~/nltk_data/stanford-parser-full.zip && cd
+
+echo '
+# Stanford NLP
+export CLASSPATH=~/nltk_data/stanford-ner/stanford-ner.jar:~/nltk_data/stanford-postagger-full/stanford-postagger.jar:~/nltk_data/stanford-parser-full/stanford-parser.jar:~/nltk_data/stanford-parser-full/stanford-parser-3.6.0-models.jar
+export STANFORD_MODELS=~/nltk_data/stanford-ner/classifiers:~/nltk_data/stanford-postagger-full/models:' >> ~/.bash_profile
+source ~/.bash_profile
+
+```
+
 
 ## Ref
 
