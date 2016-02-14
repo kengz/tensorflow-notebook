@@ -194,48 +194,105 @@ from textblob import TextBlob
 
 # Stanford NLP with hacks from https://gist.github.com/alvations/e1df0ba227e542955a8a
 
-import nltk
-nltk.__version__
-from nltk.tag import StanfordNERTagger
-st = StanfordNERTagger('english.all.3class.distsim.crf.ser.gz')
-print(st._stanford_jar)
-stanford_dir = st._stanford_jar.rpartition('/')[0]
-from nltk.internals import find_jars_within_path
-stanford_jars = find_jars_within_path(stanford_dir)
-print(":".join(stanford_jars))
-st._stanford_jar = ':'.join(stanford_jars)
-print(st._stanford_jar)
-res = st.tag('Rami Eid is studying at Stony Brook University in NY'.split())
-print(res)
+# import nltk
+# nltk.__version__
+# from nltk.tag import StanfordNERTagger
+# st = StanfordNERTagger('english.all.3class.distsim.crf.ser.gz')
+# print(st._stanford_jar)
+# stanford_dir = st._stanford_jar.rpartition('/')[0]
+# from nltk.internals import find_jars_within_path
+# stanford_jars = find_jars_within_path(stanford_dir)
+# print(":".join(stanford_jars))
+# st._stanford_jar = ':'.join(stanford_jars)
+# print(st._stanford_jar)
+# res = st.tag('Rami Eid is studying at Stony Brook University in NY'.split())
+# print(res)
 
 
 
-from nltk.internals import find_jars_within_path
-from nltk.tag import StanfordPOSTagger
-st = StanfordPOSTagger('english-bidirectional-distsim.tagger')
-print(st._stanford_jar)
-stanford_dir = st._stanford_jar.rpartition('/')[0]
-stanford_jars = find_jars_within_path(stanford_dir)
-st._stanford_jar = ':'.join(stanford_jars)
-st.tag('What is the airspeed of an unladen swallow ?'.split())
+# from nltk.internals import find_jars_within_path
+# from nltk.tag import StanfordPOSTagger
+# st = StanfordPOSTagger('english-bidirectional-distsim.tagger')
+# print(st._stanford_jar)
+# stanford_dir = st._stanford_jar.rpartition('/')[0]
+# stanford_jars = find_jars_within_path(stanford_dir)
+# st._stanford_jar = ':'.join(stanford_jars)
+# st.tag('What is the airspeed of an unladen swallow ?'.split())
 
 
-from nltk.internals import find_jars_within_path
-from nltk.parse.stanford import StanfordParser
-parser=StanfordParser(model_path="edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz")
-parser._classpath
-stanford_dir = parser._classpath[0].rpartition('/')[0]
-stanford_dir
-parser._classpath = tuple(find_jars_within_path(stanford_dir))
-parser._classpath
-list(parser.raw_parse("the quick brown fox jumps over the lazy dog"))
+# from nltk.internals import find_jars_within_path
+# from nltk.parse.stanford import StanfordParser
+# parser=StanfordParser(model_path="edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz", corenlp_options = '')
+# parser._classpath
+# stanford_dir = parser._classpath[0].rpartition('/')[0]
+# stanford_dir
+# parser._classpath = tuple(find_jars_within_path(stanford_dir))
+# parser._classpath
+# print(list(parser.raw_parse("the quick brown fox jumps over the lazy dog")))
 
-from nltk.internals import find_jars_within_path
-from nltk.parse.stanford import StanfordDependencyParser
-dep_parser=StanfordDependencyParser(model_path="edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz")
-stanford_dir = dep_parser._classpath[0].rpartition('/')[0]
-dep_parser._classpath = tuple(find_jars_within_path(stanford_dir))
+# from nltk.internals import find_jars_within_path
+# from nltk.parse.stanford import StanfordDependencyParser
+# dep_parser=StanfordDependencyParser(model_path="edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz")
+# stanford_dir = dep_parser._classpath[0].rpartition('/')[0]
+# dep_parser._classpath = tuple(find_jars_within_path(stanford_dir))
 
-print(next(dep_parser.raw_parse("The quick brown fox jumps over the lazy dog.")))
+# print(next(dep_parser.raw_parse("The quick brown fox jumps over the lazy dog.")))
 
-print([parse.tree() for parse in dep_parser.raw_parse("The quick brown fox jumps over the lazy dog.")])
+# print([parse.tree() for parse in dep_parser.raw_parse("The quick brown fox jumps over the lazy dog.")])
+
+
+# from nltk.internals import find_jars_within_path
+# from nltk.parse.stanford import StanfordNeuralDependencyParser
+# parser = StanfordNeuralDependencyParser(model_path="edu/stanford/nlp/models/parser/nndep/english_UD.gz", corenlp_options='-annotators sutime')
+# stanford_dir = parser._classpath[0].rpartition('/')[0]
+# slf4j_jar = stanford_dir + '/slf4j-api.jar'
+# parser._classpath = list(parser._classpath) + [slf4j_jar]
+# parser.java_options = '-mx5000m' # To increase the amount of RAM it can use.
+# sentences = ("The quick brown fox jumps over the lazy dog.", "The quick grey wolf jumps over the lazy fox.")
+# parsed_sents = sum([[parse.tree() for parse in dep_graphs] for dep_graphs in parser.raw_parse_sents(sentences)], [])
+# print(parsed_sents)
+# sum([[parse.tree() for parse in dep_graphs] for dep_graphs in parser.raw_parse_sents(sentences)], [])
+
+
+# def get_continuous_chunks(tagged_sent):
+#     continuous_chunk = []
+#     current_chunk = []
+
+#     for token, tag in tagged_sent:
+#         if tag != "O":
+#             current_chunk.append((token, tag))
+#         else:
+#             if current_chunk: # if the current chunk is not empty
+#                 continuous_chunk.append(current_chunk)
+#                 current_chunk = []
+#     # Flush the final current_chunk into the continuous_chunk, if any.
+#     if current_chunk:
+#         continuous_chunk.append(current_chunk)
+#     return continuous_chunk
+
+# ne_tagged_sent = [('Rami', 'PERSON'), ('Eid', 'PERSON'), ('is', 'O'), ('studying', 'O'), ('at', 'O'), ('Stony', 'ORGANIZATION'), ('Brook', 'ORGANIZATION'), ('University', 'ORGANIZATION'), ('in', 'O'), ('NY', 'LOCATION')]
+
+# named_entities = get_continuous_chunks(ne_tagged_sent)
+# named_entities = get_continuous_chunks(ne_tagged_sent)
+# named_entities_str = [" ".join([token for token, tag in ne]) for ne in named_entities]
+# named_entities_str_tag = [(" ".join([token for token, tag in ne]), ne[0][1]) for ne in named_entities]
+
+# print named_entities
+
+from nltk.parse.stanford import *
+from nltk.tag.stanford import *
+print(dir())
+
+
+# content =”Belfast up and coming band Cashier No.9 are playing a free gig in the Mercantile this Saturday night at 9.30pm. The band are set to release their debut album To The Death of Fun, which is mixed by David Holmes, in March.”
+
+# tag(content)
+
+
+
+# -annotators tokenize,ssplit,pos,lemma,ner,sutime -properties sutime.properties
+# -annotators tokenize,ssplit,pos,lemma,ner,parse,dcoref	
+# https://bebblebrox.wordpress.com/2011/01/23/temporal-expressions/
+
+# self.corenlp_options += '-annotators tokenize,ssplit,pos,lemma,ner,sutime'
+
